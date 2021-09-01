@@ -11,4 +11,8 @@ class Oystercard
     fail "credit cannot be added, card balance exceeds #{MAX_BALANCE}" if value + balance > MAX_BALANCE 
     @balance += value  
   end
+
+  def deduct(value)
+    @balance -= value
+  end
 end
