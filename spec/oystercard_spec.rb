@@ -14,15 +14,8 @@ describe Oystercard do
 
     it "prevents a balance of over £90" do
       maximum_balance = Oystercard::MAX_BALANCE
-      subject.top_up(80)
+      subject.top_up(maximum_balance)
       expect{subject.top_up 15}.to raise_error "credit cannot be added, card balance exceeds #{maximum_balance}"
     end
   end
 end
-
-
-# Previous test examples 
-# expect(station).to respond_to :dock
-# expect(heathrow.planes).to include(boeing_727)
-# expect(piggy_bank.coins).to include("50p")
-# expect(fizzbuzz(5)).to eq("buzz")
