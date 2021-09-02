@@ -2,7 +2,7 @@ class Oystercard
   MAX_BALANCE = 90
   MINUMUM_FARE = 1
 
-  attr_reader :balance 
+  attr_reader :balance, :entry_station
   
   def initialize
     @balance = 0
@@ -13,21 +13,19 @@ class Oystercard
     fail "credit cannot be added, card balance exceeds #{MAX_BALANCE}" if value + balance > MAX_BALANCE 
     @balance += value  
   end
-
-  
   
   def in_journey?
-    @in_journey
+    !!@entry_station
   end
 
-  def touch_in
+  def touch_in(station)
     fail "Insufficient funds" if @balance < MINUMUM_FARE
-    @in_journey = true
+    @entry_station = station
   end  
   
   def touch_out 
     deduct(MINUMUM_FARE)
-    @in_journey = false
+    @entry_station = nil
   end
   
   private
