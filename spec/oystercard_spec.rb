@@ -12,14 +12,15 @@ describe Oystercard do
   it {is_expected.to respond_to(:touch_in)}
 
   it "can change the status to true when touched in" do
+    subject.top_up(1)
     subject.touch_in
     expect(subject).to be_in_journey
-  #  expect(subject.in_journey).to be true 
   end 
 
   it {is_expected.to respond_to(:touch_out)} 
   
   it " change the status to not in journey when touched out" do 
+    subject.top_up(1)
     subject.touch_in
     subject.touch_out
     expect(subject).not_to be_in_journey
@@ -46,5 +47,9 @@ describe Oystercard do
     it "deducts money from oystercard" do
       expect{subject.deduct 3}.to change{ subject.balance }.by -3
     end 
+  end
+
+  it "should return an error if insufficient funds" do
+    expect { subject.touch_in }. to raise_error "Insufficient funds"
   end
 end
