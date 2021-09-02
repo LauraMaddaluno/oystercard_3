@@ -5,6 +5,26 @@ describe Oystercard do
     expect(subject.balance).to eq(0)
   end
 
+  it "has an inital not in journey status" do
+    expect(subject.in_journey?).to be false
+  end
+
+  it {is_expected.to respond_to(:touch_in)}
+
+  it "can change the status to true when touched in" do
+    subject.touch_in
+    expect(subject).to be_in_journey
+  #  expect(subject.in_journey).to be true 
+  end 
+
+  it {is_expected.to respond_to(:touch_out)} 
+  
+  it " change the status to not in journey when touched out" do 
+    subject.touch_in
+    subject.touch_out
+    expect(subject).not_to be_in_journey
+  end
+  
   describe "#top_up" do
     
     it {is_expected.to respond_to(:top_up).with(1).argument}
@@ -22,9 +42,9 @@ describe Oystercard do
 
   describe '#deduct'do 
     it {is_expected.to respond_to(:deduct).with(1).argument}
-    end
+    
     it "deducts money from oystercard" do
       expect{subject.deduct 3}.to change{ subject.balance }.by -3
     end 
-
+  end
 end
