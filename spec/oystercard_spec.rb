@@ -41,15 +41,13 @@ describe Oystercard do
     end
   end
 
-  describe '#deduct'do 
-    it {is_expected.to respond_to(:deduct).with(1).argument}
-    
-    it "deducts money from oystercard" do
-      expect{subject.deduct 3}.to change{ subject.balance }.by -3
-    end 
+  it "should return an error if insufficient funds" do
+    expect { subject.touch_in }.to raise_error "Insufficient funds"
   end
 
-  it "should return an error if insufficient funds" do
-    expect { subject.touch_in }. to raise_error "Insufficient funds"
+  it "it when touch out it should charge for the travel" do
+    subject.top_up(5)
+    subject.touch_in
+    expect{subject.touch_out}.to change{subject.balance }.by (- Oystercard::MINUMUM_FARE)
   end
 end
