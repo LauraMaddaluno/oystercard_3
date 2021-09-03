@@ -27,7 +27,6 @@ describe Oystercard do
   end
   
   describe "#top_up" do
-
     it "can top up the balance" do 
       expect { subject.top_up(2) }.to change { subject.balance }.by(2)
     end
